@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
+
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import clienteInstance from "@/helper/axios-instance";
+import Autocomplete from "@mui/material/Autocomplete";
+import top100Films from "./Users";
 
 export default function InfoForm({
   onDataCliente,
@@ -75,44 +78,20 @@ export default function InfoForm({
     }
   };
 
+  const options = top100Films.map((option) => {
+    const firstLetter = option.title[0].toUpperCase();
+    return {
+      firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+      ...option,
+    };
+  });
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Informações do cliente
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            type="text"
-            required
-            id="fantasia"
-            name="fantasia"
-            label="Nome fantasia"
-            fullWidth
-            autoComplete="nome pelo qual conhecemos ex. McDonnald's"
-            variant="standard"
-            value={clientData ? clientData.fantasia : ""}
-            onChange={(e) =>
-              setClientData({ ...clientData, fantasia: e.target.value })
-            }
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            type="text"
-            required
-            id="nome"
-            name="nome"
-            label="Razão social"
-            fullWidth
-            autoComplete="Nome de registro ex Arcos Dourados"
-            variant="standard"
-            value={clientData ? clientData.nome : ""}
-            onChange={(e) =>
-              setClientData({ ...clientData, nome: e.target.value })
-            }
-          />
-        </Grid>
         <Grid item xs={12}>
           <TextField
             required
@@ -121,35 +100,57 @@ export default function InfoForm({
             label="CNPJ"
             fullWidth
             autoComplete="cnpj"
-            variant="standard"
+            variant="outlined"
             onChange={handleChangeCNPJ}
             onBlur={handleBlurCNPJ}
-            value={clientData ? clientData.cnpj : "50151253000134"}
+            value={clientData ? clientData.cnpj : ""}
           />
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                type="text"
+                required
+                id="fantasia"
+                name="fantasia"
+                label="Nome fantasia"
+                fullWidth
+                margin="normal"
+                autoComplete="nome pelo qual conhecemos ex. McDonnald's"
+                variant="outlined"
+                value={clientData ? clientData.fantasia : ""}
+                onChange={(e) =>
+                  setClientData({ ...clientData, fantasia: e.target.value })
+                }
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                type="text"
+                required
+                id="nome"
+                name="nome"
+                label="Razão social"
+                fullWidth
+                margin="normal"
+                autoComplete="Nome de registro ex Arcos Dourados"
+                variant="outlined"
+                value={clientData ? clientData.nome : ""}
+                onChange={(e) =>
+                  setClientData({ ...clientData, nome: e.target.value })
+                }
+              />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12}>
           <TextField
-            id="simplesNacional"
-            name="simpesNacional"
-            label="Simples nacional ativo"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-            value={clientData ? clientData.simplesNacional : ""}
-            onChange={(e) =>
-              setClientData({ ...clientData, simplesNacional: e.target.value })
-            }
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
             required
-            id="city"
-            name="city"
+            id="atividadePrincipal"
+            name="atividadePrincipal"
             label="Área de atuação"
             fullWidth
-            autoComplete="shipping address-level2"
-            variant="standard"
+            variant="outlined"
             value={clientData ? clientData.atividadePrincipal : ""}
             onChange={(e) =>
               setClientData({
@@ -160,45 +161,82 @@ export default function InfoForm({
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            id="situacao"
-            name="situacao"
-            label="Status da empresa"
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={["Sim", "Não"]}
             fullWidth
-            variant="standard"
-            value={clientData ? clientData.situacao : ""}
-            onChange={(e) =>
-              setClientData({ ...clientData, situacao: e.target.value })
-            }
+            renderInput={(params) => (
+              <TextField {...params} label="Simples nacional ativo?" />
+            )}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            id="zip"
-            name="zip"
-            label="gestor da conta"
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={["Ativo", "Inativo"]}
             fullWidth
-            autoComplete="shipping postal-code"
-            variant="standard"
+            renderInput={(params) => (
+              <TextField {...params} label="Satus da empresa" />
+            )}
           />
         </Grid>
+
         <Grid item xs={12} sm={6}>
-          <TextField
-            id="country"
-            name="country"
-            label="Analista da conta"
+          <Autocomplete
             fullWidth
-            autoComplete="shipping country"
-            variant="standard"
+            id="grouped-demo"
+            options={options.sort(
+              (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+            )}
+            groupBy={(option) => option.firstLetter}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField {...params} label="Gestor da conta" />
+            )}
+            renderGroup={(params) => (
+              <li key={params.key}>
+                <Typography variant="h5" gutterBottom>
+                  {params.group}
+                </Typography>
+                <div>{params.children}</div>
+              </li>
+            )}
           />
         </Grid>
+
         <Grid item xs={12} sm={6}>
+          <Autocomplete
+            fullWidth
+            id="grouped-demo"
+            options={options.sort(
+              (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+            )}
+            groupBy={(option) => option.firstLetter}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField {...params} label="Analista da conta" />
+            )}
+            renderGroup={(params) => (
+              <li key={params.key}>
+                <Typography variant="h5" gutterBottom>
+                  {params.group}
+                </Typography>
+                <div>{params.children}</div>
+              </li>
+            )}
+          />
+        </Grid>
+        <Grid item xs={12} sm={12}>
           <TextField
             id="fatorCompetitivo"
             name="fatorCompetitivo"
             label="Fator competitivo"
             fullWidth
-            variant="standard"
+            multiline
+            maxRows={2}
+            variant="outlined"
             value={clientData ? clientData.fatorCompetitivo : ""}
             onChange={(e) =>
               setClientData({ ...clientData, fatorCompetitivo: e.target.value })
