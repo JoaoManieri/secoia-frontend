@@ -238,7 +238,7 @@ export default function InfoForm({
               "Diana Prince",
               "Barry Allen",
               "Tony Stark ",
-              "DavSteve Rogers",
+              "Steve Rogers",
             ]}
             fullWidth
             value={
