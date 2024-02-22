@@ -23,15 +23,18 @@ function getStepContent(step) {
   const [listContatos, setListContatos] = React.useState([])
 
   React.useEffect(() => {
-
-
-
-
-  }, [dataCliente])
+    console.log("Endereço")
+    console.log(listEndereco.cep)
+  }, [listEndereco]);
+  
 
   switch (step) {
     case 0:
-      return <InfoForm onDataCliente={setDataCliente} cliente={dataCliente} />;
+      return <InfoForm 
+      onDataCliente={setDataCliente} 
+      cliente={dataCliente}
+      setListEndereco={setListEndereco} 
+      setListContatos={setListContatos} />;
     case 1:
       return <ContactForm 
       listEndereco={listEndereco} 

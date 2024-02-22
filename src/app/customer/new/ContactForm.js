@@ -8,6 +8,8 @@ import EnderecoDialog from "./components/NewEnderecoDialog"
 
 export default function ContactForm({ listEndereco, setListEndereco, listContatos, setListContatos }) {
 
+  const [rowEndereco, setRowEndereco] = React.useState([])
+
   function createDataContact(nome, cargo, email) {
     return { nome, cargo, email };
   }
@@ -17,44 +19,33 @@ export default function ContactForm({ listEndereco, setListEndereco, listContato
   }
 
   const addNewContact = (nome, telefone, email) => {
-    const newRows = [...listEndereco, createDataContact(nome, telefone, email)];
-    setListEndereco(newRows);
+    const newRows = [...listContatos, createDataContact(nome, telefone, email)];
+    setListContatos(newRows);
   };
 
   const addNewEndereco = ( cep, logradouro, numero, bairro, municipio, uf ) => {
-    const newEndereco = [...listContatos, createDataEndereco(cep, logradouro, numero, bairro, municipio, uf)];
-    setListContatos(newEndereco);
+    const newEndereco = [...listEndereco, createDataEndereco(cep, logradouro, numero, bairro, municipio, uf)];
+    console.log("New endereco")
+    console.log(newEndereco)
+    
+    setRowEndereco(newEndereco);
+    setListEndereco(newEndereco);
+    console.log("Lista de enderecos")
+    console.log(listEndereco)
   };
 
-
-  // React.useEffect(() => {
-  //   if (cliente 
-  //     && cliente.nome !== null
-  //     && cliente.email !== null 
-  //     && cliente.telefone !== null) {
-  //     setListEndereco([
-  //       ...listEndereco,
-  //       createDataContact(cliente.nome, cliente.telefone, cliente.email),
-  //     ]);
-  //   }
-  // }, [listEndereco]);
-
-  // React.useEffect(() => {
-  //   if (cliente 
-  //     && cliente.cep !== null 
-  //     && cliente.logradouro !== null 
-  //     && cliente.numero !== null 
-  //     && cliente.bairro !== null 
-  //     && cliente.municipio !== null 
-  //     && cliente.uf !== null) {
-  //     setListContatos([
-  //       ...listContatos,
-  //       createDataEndereco(cliente.cep,  cliente.logradouro, cliente.numero, cliente.bairro, cliente.municipio, cliente.uf),
-  //     ]);
-  //   }
-  // }, [listContatos]);
-
-
+  React.useEffect(() => {
+    listEndereco.forEach(element => {
+      addNewEndereco(
+        element.cep,
+        element.logradouro,
+        element.numero,
+        element.bairro,
+        element.municipio,
+        element.uf
+      )
+    });
+  },[]);
 
   return (
     <React.Fragment>
@@ -63,7 +54,7 @@ export default function ContactForm({ listEndereco, setListEndereco, listContato
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
-          <ContactList rows={listEndereco} />
+          <ContactList rows={listContatos} />
           <ContatctDialog addNewContact={addNewContact} />
         </Grid>
       </Grid>
@@ -75,7 +66,7 @@ export default function ContactForm({ listEndereco, setListEndereco, listContato
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
-          <EnderecoList rows={listContatos} />
+          <EnderecoList rows={rowEndereco} />
           <EnderecoDialog addNewEndereco={addNewEndereco} />
         </Grid>
       </Grid>

@@ -9,6 +9,8 @@ import Paper from '@mui/material/Paper';
 
 export default function EnderecoList({ rows }) {
 
+  console.log(typeof rows)
+
   return (
     <TableContainer component={Paper} sx={{ padding: '10px' }} >
       <Table size="small" stickyHeader aria-label="a dense table">
@@ -23,7 +25,7 @@ export default function EnderecoList({ rows }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((row, index) => (
             <TableRow
               hover 
               key={row.name}

@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import clienteInstance from "@/helper/axios-instance";
 
-export default function InfoForm({ onDataCliente, cliente }) {
+export default function InfoForm({ onDataCliente, cliente, setListEndereco, setListContatos }) {
 
   const [clientData, setClientData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,12 +25,27 @@ export default function InfoForm({ onDataCliente, cliente }) {
     }
   },[clientData])
 
+  function createDataEndereco( cep, logradouro, numero, bairro, municipio, uf){
+    return { cep, logradouro, numero, bairro, municipio, uf }
+  }
+
+
   const handleBlurCNPJ = async (event) => {
     const cnpj = event.target.value;
     setClientData({...clientData, cnpj});
     setLoading(true);
     try {
-      const response = await clienteInstance.get(`externo/busca/${cnpj}`);   
+      const response = await clienteInstance.get(`externo/busca/${cnpj}`);  
+      const enderecoDefault = [createDataEndereco(
+        response.data.cep, 
+        response.data.logradouro, 
+        response.data.numero, 
+        response.data.bairro, 
+        response.data.municipio, 
+        response.data.uf)]
+
+        
+      setListEndereco(enderecoDefault)
       setClientData(prevState => ({...prevState, ...response.data}));
       setError(null);
     } catch (err) {
@@ -85,7 +100,7 @@ export default function InfoForm({ onDataCliente, cliente }) {
             variant="standard"
             onChange={handleChangeCNPJ}
             onBlur={handleBlurCNPJ}
-            value={clientData ? clientData.cnpj : ""}
+            value={clientData ? clientData.cnpj : "50151253000134"}
           />
         </Grid>
         <Grid item xs={12}>

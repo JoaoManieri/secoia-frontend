@@ -8,6 +8,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 export default function ContactList({ rows }) {
+
+  console.log(rows)
+
+
   return (
     <TableContainer component={Paper} sx={{ padding: '10px' }} >
       <Table size="small" stickyHeader aria-label="a dense table">
