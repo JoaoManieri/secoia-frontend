@@ -23,8 +23,6 @@ function getStepContent(step) {
   const [listContatos, setListContatos] = React.useState([])
 
   React.useEffect(() => {
-    console.log("Endereço")
-    console.log(listEndereco.cep)
   }, [listEndereco]);
   
 
@@ -51,10 +49,6 @@ function getStepContent(step) {
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
-  
-  const handleData = (value) => {
-    setData(value);
-  };
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);

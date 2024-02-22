@@ -8,8 +8,6 @@ import EnderecoDialog from "./components/NewEnderecoDialog"
 
 export default function ContactForm({ listEndereco, setListEndereco, listContatos, setListContatos }) {
 
-  const [rowEndereco, setRowEndereco] = React.useState([])
-
   function createDataContact(nome, cargo, email) {
     return { nome, cargo, email };
   }
@@ -19,33 +17,15 @@ export default function ContactForm({ listEndereco, setListEndereco, listContato
   }
 
   const addNewContact = (nome, telefone, email) => {
-    const newRows = [...listContatos, createDataContact(nome, telefone, email)];
-    setListContatos(newRows);
+    const newRows = [createDataContact(nome, telefone, email)];
+    setListContatos(prevListEndereco => [...prevListEndereco, ...newRows]);
   };
 
   const addNewEndereco = ( cep, logradouro, numero, bairro, municipio, uf ) => {
-    const newEndereco = [...listEndereco, createDataEndereco(cep, logradouro, numero, bairro, municipio, uf)];
-    console.log("New endereco")
-    console.log(newEndereco)
-    
-    setRowEndereco(newEndereco);
-    setListEndereco(newEndereco);
-    console.log("Lista de enderecos")
-    console.log(listEndereco)
+    const newRows = [createDataEndereco( cep, logradouro, numero, bairro, municipio, uf)];
+    setListEndereco(prevListEndereco => [...prevListEndereco, ...newRows]);
   };
 
-  React.useEffect(() => {
-    listEndereco.forEach(element => {
-      addNewEndereco(
-        element.cep,
-        element.logradouro,
-        element.numero,
-        element.bairro,
-        element.municipio,
-        element.uf
-      )
-    });
-  },[]);
 
   return (
     <React.Fragment>
@@ -66,7 +46,7 @@ export default function ContactForm({ listEndereco, setListEndereco, listContato
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
-          <EnderecoList rows={rowEndereco} />
+          <EnderecoList rows={listEndereco} />
           <EnderecoDialog addNewEndereco={addNewEndereco} />
         </Grid>
       </Grid>

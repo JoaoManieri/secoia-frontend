@@ -29,13 +29,17 @@ export default function InfoForm({ onDataCliente, cliente, setListEndereco, setL
     return { cep, logradouro, numero, bairro, municipio, uf }
   }
 
+  function createDataContact(nome, cargo, email) {
+    return { nome, cargo, email };
+  }
 
   const handleBlurCNPJ = async (event) => {
     const cnpj = event.target.value;
     setClientData({...clientData, cnpj});
     setLoading(true);
     try {
-      const response = await clienteInstance.get(`externo/busca/${cnpj}`);  
+      const response = await clienteInstance.get(`externo/busca/${cnpj}`);
+
       const enderecoDefault = [createDataEndereco(
         response.data.cep, 
         response.data.logradouro, 
@@ -44,8 +48,13 @@ export default function InfoForm({ onDataCliente, cliente, setListEndereco, setL
         response.data.municipio, 
         response.data.uf)]
 
-        
+      const contatoDefault = [createDataContact(
+        response.data.nome, 
+        response.data.cargo, 
+        response.data.email
+      )]
       setListEndereco(enderecoDefault)
+      setListContatos(contatoDefault)
       setClientData(prevState => ({...prevState, ...response.data}));
       setError(null);
     } catch (err) {

@@ -9,8 +9,6 @@ import Paper from '@mui/material/Paper';
 
 export default function EnderecoList({ rows }) {
 
-  console.log(typeof rows)
-
   return (
     <TableContainer component={Paper} sx={{ padding: '10px' }} >
       <Table size="small" stickyHeader aria-label="a dense table">
