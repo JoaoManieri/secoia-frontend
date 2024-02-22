@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
     router.push(route);
   }
 
-  // const rows = [
+   const rows = [
   //   createData('India', 'IN', 1324171354, 3287263),
   //   createData('China', 'CN', 1403500365, 9596961),
   //   createData('Italy', 'IT', 60483973, 301340),
@@ -69,7 +69,7 @@ export default function RootLayout({ children }) {
   //   createData('Russia', 'RU', 146793744, 17098246),
   //   createData('Nigeria', 'NG', 200962417, 923768),
   //   createData('Brazil', 'BR', 210147125, 8515767),
-  // ];
+   ];
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
