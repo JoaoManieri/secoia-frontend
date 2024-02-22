@@ -17,31 +17,39 @@ import Review from "./Review";
 const steps = ["Informações do cliente", "Informações de contato", "Revisão"];
 
 function getStepContent(step) {
-
   const [dataCliente, setDataCliente] = React.useState({});
-  const [listEndereco, setListEndereco] = React.useState([])
-  const [listContatos, setListContatos] = React.useState([])
+  const [listEndereco, setListEndereco] = React.useState([]);
+  const [listContatos, setListContatos] = React.useState([]);
 
-  React.useEffect(() => {
-  }, [listEndereco]);
-  
+  React.useEffect(() => {}, [listEndereco]);
 
   switch (step) {
     case 0:
-      return <InfoForm 
-      onDataCliente={setDataCliente} 
-      cliente={dataCliente}
-      setListEndereco={setListEndereco} 
-      setListContatos={setListContatos} />;
+      return (
+        <InfoForm
+          onDataCliente={setDataCliente}
+          cliente={dataCliente}
+          setListEndereco={setListEndereco}
+          setListContatos={setListContatos}
+        />
+      );
     case 1:
-      return <ContactForm 
-      listEndereco={listEndereco} 
-      setListEndereco={setListEndereco} 
-      listContatos={listContatos} 
-      setListContatos={setListContatos} 
-      />
+      return (
+        <ContactForm
+          listEndereco={listEndereco}
+          setListEndereco={setListEndereco}
+          listContatos={listContatos}
+          setListContatos={setListContatos}
+        />
+      );
     case 2:
-      return <Review />;
+      return (
+        <Review
+          dataCliente={dataCliente}
+          listEndereco={listEndereco}
+          listContatos={listContatos}
+        />
+      );
     default:
       throw new Error("Erro");
   }

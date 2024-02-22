@@ -2,30 +2,35 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import ContactList from "./components/ContactList";
-import EnderecoList from "./components/EnderecoList"
+import EnderecoList from "./components/EnderecoList";
 import ContatctDialog from "./components/NewContactDialog";
-import EnderecoDialog from "./components/NewEnderecoDialog"
+import EnderecoDialog from "./components/NewEnderecoDialog";
 
-export default function ContactForm({ listEndereco, setListEndereco, listContatos, setListContatos }) {
-
-  function createDataContact(nome, cargo, email) {
-    return { nome, cargo, email };
+export default function ContactForm({
+  listEndereco,
+  setListEndereco,
+  listContatos,
+  setListContatos,
+}) {
+  function createDataContact(nome, cargo, email, telefone, celular) {
+    return { nome, cargo, email, telefone, celular };
   }
 
-  function createDataEndereco( cep, logradouro, numero, bairro, municipio, uf){
-    return { cep, logradouro, numero, bairro, municipio, uf }
+  function createDataEndereco(cep, logradouro, numero, bairro, municipio, uf) {
+    return { cep, logradouro, numero, bairro, municipio, uf };
   }
 
-  const addNewContact = (nome, telefone, email) => {
-    const newRows = [createDataContact(nome, telefone, email)];
-    setListContatos(prevListEndereco => [...prevListEndereco, ...newRows]);
+  const addNewContact = (nome, cargo, email, telefone, celular) => {
+    const newRows = [createDataContact(nome, cargo, email, telefone, celular)];
+    setListContatos((prevListEndereco) => [...prevListEndereco, ...newRows]);
   };
 
-  const addNewEndereco = ( cep, logradouro, numero, bairro, municipio, uf ) => {
-    const newRows = [createDataEndereco( cep, logradouro, numero, bairro, municipio, uf)];
-    setListEndereco(prevListEndereco => [...prevListEndereco, ...newRows]);
+  const addNewEndereco = (cep, logradouro, numero, bairro, municipio, uf) => {
+    const newRows = [
+      createDataEndereco(cep, logradouro, numero, bairro, municipio, uf),
+    ];
+    setListEndereco((prevListEndereco) => [...prevListEndereco, ...newRows]);
   };
-
 
   return (
     <React.Fragment>
@@ -38,7 +43,7 @@ export default function ContactForm({ listEndereco, setListEndereco, listContato
           <ContatctDialog addNewContact={addNewContact} />
         </Grid>
       </Grid>
-      
+
       <hr></hr>
 
       <Typography variant="h6" gutterBottom>

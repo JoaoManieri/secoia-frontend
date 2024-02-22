@@ -1,89 +1,95 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Grid from '@mui/material/Grid';
+import * as React from "react";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { Divider } from "@mui/material";
+import Grid from "@mui/material/Grid";
 
-const products = [
-  {
-    name: 'Product 1',
-    desc: 'A nice thing',
-    price: '$9.99',
-  },
-  {
-    name: 'Product 2',
-    desc: 'Another thing',
-    price: '$3.45',
-  },
-  {
-    name: 'Product 3',
-    desc: 'Something else',
-    price: '$6.51',
-  },
-  {
-    name: 'Product 4',
-    desc: 'Best thing of all',
-    price: '$14.11',
-  },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
+export default function Review({ dataCliente, listEndereco, listContatos }) {
+  console.log(dataCliente);
 
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
-
-export default function Review() {
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Order summary
-    
+      <Typography variant="h5" gutterBottom>
+        Cadastro de Clientes
       </Typography>
-      <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
-          </ListItem>
-        ))}
-        <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Total" />
-          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $34.06
-          </Typography>
-        </ListItem>
-      </List>
+
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Shipping
+        <Grid item xs={6}>
+          <Typography variant="body1">
+            <strong>Razão Social:</strong> {dataCliente.nome}
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Payment details
+        <Grid item xs={6}>
+          <Typography variant="body1">
+            <strong>Nome Fantasia:</strong> {dataCliente.fantasia}
           </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body1">
+            <strong>CNPJ:</strong> {dataCliente.cnpj}
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body1">
+            <strong>Ativo:</strong> {dataCliente.ativo ? "Sim" : "Não"}
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body1">
+            <strong>Área de Atuação:</strong> {dataCliente.atividadePrincipal}
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body1">
+            <strong>Analisat de Conta:</strong> {dataCliente.analistaConta}
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body1">
+            <strong>Gestor de Conta:</strong> {dataCliente.gestorConta}
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body1">
+            <strong>Fator Competitivo:</strong> {dataCliente.fatorCompetitivo}
+          </Typography>
         </Grid>
       </Grid>
+
+      <br />
+      <br />
+
+      <Typography variant="h6" gutterBottom>
+        Contatos
+      </Typography>
+      <Divider />
+      <List disablePadding>
+        {listContatos.map((contato) => (
+          <ListItem key={contato.telefone} sx={{ py: 1, px: 0 }}>
+            <ListItemText primary={contato.nome} />
+            <ListItemText primary={contato.cargo} />
+            <ListItemText primary={contato.email} />
+            <Typography variant="body2">{contato.telefone}</Typography>
+          </ListItem>
+        ))}
+      </List>
+      <Typography variant="h6" gutterBottom>
+        Endereços
+      </Typography>
+      <Divider />
+      <List disablePadding>
+        {listEndereco.map((enderecos) => (
+          <ListItem key={enderecos.cep} sx={{ py: 1, px: 0 }}>
+            <ListItemText primary={enderecos.cep} />
+            <ListItemText primary={enderecos.logradouro} />
+            <ListItemText primary={enderecos.bairro} />
+            <ListItemText primary={enderecos.municipio} />
+            <Typography variant="body2">{enderecos.uf}</Typography>
+          </ListItem>
+        ))}
+      </List>
     </React.Fragment>
   );
 }

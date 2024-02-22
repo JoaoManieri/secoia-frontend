@@ -4,65 +4,76 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import clienteInstance from "@/helper/axios-instance";
 
-export default function InfoForm({ onDataCliente, cliente, setListEndereco, setListContatos }) {
-
+export default function InfoForm({
+  onDataCliente,
+  cliente,
+  setListEndereco,
+  setListContatos,
+}) {
   const [clientData, setClientData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+
   const handleChangeCNPJ = (event) => {
     const cnpj = event.target.value;
-    setClientData({...clientData, cnpj});
+    setClientData({ ...clientData, cnpj });
   };
-  
+
   useEffect(() => {
-    setClientData(cliente)
-  }, [])
+    setClientData(cliente);
+  }, []);
 
   useEffect(() => {
     if (clientData !== null) {
-      onDataCliente(clientData)
+      onDataCliente(clientData);
     }
-  },[clientData])
+  }, [clientData]);
 
-  function createDataEndereco( cep, logradouro, numero, bairro, municipio, uf){
-    return { cep, logradouro, numero, bairro, municipio, uf }
+  function createDataEndereco(cep, logradouro, numero, bairro, municipio, uf) {
+    return { cep, logradouro, numero, bairro, municipio, uf };
   }
 
-  function createDataContact(nome, cargo, email) {
-    return { nome, cargo, email };
+  function createDataContact(nome, cargo, email, telefone) {
+    return { nome, cargo, email, telefone };
   }
 
   const handleBlurCNPJ = async (event) => {
     const cnpj = event.target.value;
-    setClientData({...clientData, cnpj});
+    setClientData({ ...clientData, cnpj });
     setLoading(true);
     try {
       const response = await clienteInstance.get(`externo/busca/${cnpj}`);
 
-      const enderecoDefault = [createDataEndereco(
-        response.data.cep, 
-        response.data.logradouro, 
-        response.data.numero, 
-        response.data.bairro, 
-        response.data.municipio, 
-        response.data.uf)]
+      const enderecoDefault = [
+        createDataEndereco(
+          response.data.cep,
+          response.data.logradouro,
+          response.data.numero,
+          response.data.bairro,
+          response.data.municipio,
+          response.data.uf
+        ),
+      ];
 
-      const contatoDefault = [createDataContact(
-        response.data.nome, 
-        response.data.cargo, 
-        response.data.email
-      )]
-      setListEndereco(enderecoDefault)
-      setListContatos(contatoDefault)
-      setClientData(prevState => ({...prevState, ...response.data}));
+      const contatoDefault = [
+        createDataContact(
+          response.data.nome,
+          response.data.cargo,
+          response.data.email,
+          response.data.telefone
+        ),
+      ];
+      setListEndereco(enderecoDefault);
+      setListContatos(contatoDefault);
+      console.log(response.data);
+      setClientData((prevState) => ({ ...prevState, ...response.data }));
       setError(null);
     } catch (err) {
       setError(err);
     } finally {
       setLoading(false);
     }
-  };  
+  };
 
   return (
     <React.Fragment>
@@ -81,7 +92,9 @@ export default function InfoForm({ onDataCliente, cliente, setListEndereco, setL
             autoComplete="nome pelo qual conhecemos ex. McDonnald's"
             variant="standard"
             value={clientData ? clientData.fantasia : ""}
-            onChange={(e) => setClientData({...clientData, fantasia: e.target.value})}
+            onChange={(e) =>
+              setClientData({ ...clientData, fantasia: e.target.value })
+            }
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -95,7 +108,9 @@ export default function InfoForm({ onDataCliente, cliente, setListEndereco, setL
             autoComplete="Nome de registro ex Arcos Dourados"
             variant="standard"
             value={clientData ? clientData.nome : ""}
-            onChange={(e) => setClientData({...clientData, nome: e.target.value})}
+            onChange={(e) =>
+              setClientData({ ...clientData, nome: e.target.value })
+            }
           />
         </Grid>
         <Grid item xs={12}>
@@ -121,7 +136,9 @@ export default function InfoForm({ onDataCliente, cliente, setListEndereco, setL
             autoComplete="shipping address-line2"
             variant="standard"
             value={clientData ? clientData.simplesNacional : ""}
-            onChange={(e) => setClientData({...clientData, simplesNacional: e.target.value})}
+            onChange={(e) =>
+              setClientData({ ...clientData, simplesNacional: e.target.value })
+            }
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -134,7 +151,12 @@ export default function InfoForm({ onDataCliente, cliente, setListEndereco, setL
             autoComplete="shipping address-level2"
             variant="standard"
             value={clientData ? clientData.atividadePrincipal : ""}
-            onChange={(e) => setClientData({...clientData, atividadePrincipal: e.target.value})}
+            onChange={(e) =>
+              setClientData({
+                ...clientData,
+                atividadePrincipal: e.target.value,
+              })
+            }
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -145,7 +167,9 @@ export default function InfoForm({ onDataCliente, cliente, setListEndereco, setL
             fullWidth
             variant="standard"
             value={clientData ? clientData.situacao : ""}
-            onChange={(e) => setClientData({...clientData, situacao: e.target.value})}
+            onChange={(e) =>
+              setClientData({ ...clientData, situacao: e.target.value })
+            }
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -170,12 +194,15 @@ export default function InfoForm({ onDataCliente, cliente, setListEndereco, setL
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="country"
-            name="country"
+            id="fatorCompetitivo"
+            name="fatorCompetitivo"
             label="Fator competitivo"
             fullWidth
-            autoComplete="shipping country"
             variant="standard"
+            value={clientData ? clientData.fatorCompetitivo : ""}
+            onChange={(e) =>
+              setClientData({ ...clientData, fatorCompetitivo: e.target.value })
+            }
           />
         </Grid>
       </Grid>
