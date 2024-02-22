@@ -79,7 +79,7 @@ export default function InfoForm({
   };
 
   const options = top100Films.map((option) => {
-    const firstLetter = option.title[0].toUpperCase();
+    const firstLetter = option[0].toUpperCase();
     return {
       firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
       ...option,
@@ -166,6 +166,14 @@ export default function InfoForm({
             id="combo-box-demo"
             options={["Sim", "Não"]}
             fullWidth
+            onChange={(e, value) => {
+              setClientData({ ...clientData, simplesNacionalAtivo: value });
+            }}
+            value={
+              clientData && clientData.simplesNacionalAtivo
+                ? clientData.simplesNacionalAtivo
+                : null
+            }
             renderInput={(params) => (
               <TextField {...params} label="Simples nacional ativo?" />
             )}
@@ -177,54 +185,72 @@ export default function InfoForm({
             id="combo-box-demo"
             options={["Ativo", "Inativo"]}
             fullWidth
+            value={
+              clientData && clientData.statusEmpresa
+                ? clientData.statusEmpresa
+                : null
+            }
+            onChange={(e, value) => {
+              setClientData({ ...clientData, statusEmpresa: value });
+            }}
             renderInput={(params) => (
-              <TextField {...params} label="Satus da empresa" />
+              <TextField {...params} label="Status da empresa" />
             )}
           />
         </Grid>
 
         <Grid item xs={12} sm={6}>
           <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={[
+              "Peter Parker",
+              "Clark Kent",
+              "Bruce Wayne",
+              "Diana Prince",
+              "Barry Allen",
+              "Tony Stark ",
+              "DavSteve Rogers",
+            ]}
             fullWidth
-            id="grouped-demo"
-            options={options.sort(
-              (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-            )}
-            groupBy={(option) => option.firstLetter}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField {...params} label="Gestor da conta" />
-            )}
-            renderGroup={(params) => (
-              <li key={params.key}>
-                <Typography variant="h5" gutterBottom>
-                  {params.group}
-                </Typography>
-                <div>{params.children}</div>
-              </li>
-            )}
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6}>
-          <Autocomplete
-            fullWidth
-            id="grouped-demo"
-            options={options.sort(
-              (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-            )}
-            groupBy={(option) => option.firstLetter}
-            getOptionLabel={(option) => option.title}
+            value={
+              clientData && clientData.analistaDaContaUsuarioId
+                ? clientData.analistaDaContaUsuarioId
+                : null
+            }
+            onChange={(e, value) => {
+              setClientData({ ...clientData, analistaDaContaUsuarioId: value });
+            }}
             renderInput={(params) => (
               <TextField {...params} label="Analista da conta" />
             )}
-            renderGroup={(params) => (
-              <li key={params.key}>
-                <Typography variant="h5" gutterBottom>
-                  {params.group}
-                </Typography>
-                <div>{params.children}</div>
-              </li>
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={[
+              "Peter Parker",
+              "Clark Kent",
+              "Bruce Wayne",
+              "Diana Prince",
+              "Barry Allen",
+              "Tony Stark ",
+              "DavSteve Rogers",
+            ]}
+            fullWidth
+            value={
+              clientData && clientData.gestorDaContaUsuarioId
+                ? clientData.gestorDaContaUsuarioId
+                : null
+            }
+            onChange={(e, value) => {
+              setClientData({ ...clientData, gestorDaContaUsuarioId: value });
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Gestor da conta" />
             )}
           />
         </Grid>

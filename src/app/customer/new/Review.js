@@ -33,7 +33,7 @@ export default function Review({ dataCliente, listEndereco, listContatos }) {
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body1">
-            <strong>Ativo:</strong> {dataCliente.ativo ? "Sim" : "Não"}
+            <strong>Simples nacional:</strong> {dataCliente.statusEmpresa}
           </Typography>
         </Grid>
         <Grid item xs={6}>
@@ -43,12 +43,14 @@ export default function Review({ dataCliente, listEndereco, listContatos }) {
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body1">
-            <strong>Analisat de Conta:</strong> {dataCliente.analistaConta}
+            <strong>Analisat de Conta:</strong>{" "}
+            {dataCliente.analistaDaContaUsuarioId}
           </Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body1">
-            <strong>Gestor de Conta:</strong> {dataCliente.gestorConta}
+            <strong>Gestor de Conta:</strong>{" "}
+            {dataCliente.gestorDaContaUsuarioId}
           </Typography>
         </Grid>
         <Grid item xs={6}>
