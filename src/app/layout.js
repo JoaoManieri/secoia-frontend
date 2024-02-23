@@ -98,7 +98,7 @@ const defaultTheme = createTheme();
 
 export default function RootLayout({ children }) {
   const router = useRouter();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   function setFragment(route) {
     router.push(route);
@@ -139,19 +139,19 @@ export default function RootLayout({ children }) {
   
   const secondaryListItemsData = [
     {
-      label: "Current month",
+      label: "--",
       icon: <AssignmentIcon />,
       onclick: () => setFragment("/"),
       enabled: false,
     },
     {
-      label: "Last quarter",
+      label: "--",
       icon: <AssignmentIcon />,
       onclick: () => setFragment("/"),
       enabled: false,
     },
     {
-      label: "Year-end sale",
+      label: "--",
       icon: <AssignmentIcon />,
       onclick: () => setFragment("/"),
       enabled: false,

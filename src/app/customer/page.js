@@ -93,7 +93,7 @@ export default function RootLayout({ children }) {
   return (
     <React.Fragment>
       <h1>Lista de clientes</h1>
-      <CustomerSearch />
+      {/* <CustomerSearch /> */}
       <br />
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -156,7 +156,7 @@ export default function RootLayout({ children }) {
       >
         + novo cliente
       </Button>
-      <ToastContainer
+      {/* <ToastContainer
             position="top-right"
             autoClose={5000}
             hideProgressBar={false}
@@ -167,7 +167,7 @@ export default function RootLayout({ children }) {
             draggable
             pauseOnHover
             theme="light"
-        /><ToastContainer />
+        /><ToastContainer /> */}
     </React.Fragment>
   );
 }
