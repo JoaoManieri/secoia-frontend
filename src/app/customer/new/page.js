@@ -38,6 +38,7 @@ function getStepContent(step) {
     case 1:
       return (
         <ContactForm
+          sx={{backgroundColor:"#004AAD" }}
           listEndereco={listEndereco}
           setListEndereco={setListEndereco}
           listContatos={listContatos}
@@ -109,7 +110,7 @@ export default function Checkout() {
                 //     ? router.push("/customer")
                 //     : handleNext
                 // }
-                sx={{ mt: 3, ml: 1 }}
+                sx={{ mt: 3, ml: 1,backgroundColor:"#004AAD"  }}
               >
                 {activeStep === steps.length - 1 ? "Concluir cadastro" : "Next"}
               </Button>}

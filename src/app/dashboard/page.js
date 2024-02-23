@@ -35,7 +35,7 @@ export default function Dash() {
                     height: 240,
                   }}
                 >
-                  <Deposits />
+                  {/* <Deposits /> */}
                 </Paper>
               </Grid>
               {/* Recent Orders */}

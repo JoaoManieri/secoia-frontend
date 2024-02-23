@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
+import ApiIcon from '@mui/icons-material/Api';
 import Container from "@mui/material/Container";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -25,10 +26,12 @@ import LayersIcon from "@mui/icons-material/Layers";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { useRouter } from "next/navigation";
 import Link from "@mui/material/Link";
+import WebhookIcon from '@mui/icons-material/Webhook';
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 //export { RootLayout }; // Export both for flexibility
 
 function Copyright() {
@@ -42,7 +45,7 @@ function Copyright() {
       {"."}
     </Typography>
   );
-  
+
 }
 
 const drawerWidth = 240;
@@ -106,52 +109,66 @@ export default function RootLayout({ children }) {
       label: "Menu",
       icon: <DashboardIcon />,
       onclick: () => setFragment("/dashboard"),
-    },
-    {
-      label: "Orders",
-      icon: <ShoppingCartIcon />,
-      onclick: () => setFragment("/"),
+      enabled: true,
     },
     {
       label: "Cadastrar clientes",
-      icon: <PeopleIcon />,
+      icon: <GroupAddIcon />,
       onclick: () => setFragment("/customer"),
+      enabled: true,
     },
     {
-      label: "Reports",
-      icon: <BarChartIcon />,
+      label: "Funções",
+      icon: <ApiIcon />,
       onclick: () => setFragment("/"),
+      enabled: false,
     },
     {
-      label: "Integrations",
+      label: "Indicadores",
+      icon: <WebhookIcon />,
+      onclick: () => setFragment("/"),
+      enabled: false,
+    },
+    {
+      label: "Integrações",
       icon: <LayersIcon />,
       onclick: () => setFragment("/"),
+      enabled: false,
     },
   ];
-
+  
   const secondaryListItemsData = [
     {
       label: "Current month",
       icon: <AssignmentIcon />,
       onclick: () => setFragment("/"),
+      enabled: false,
     },
     {
       label: "Last quarter",
       icon: <AssignmentIcon />,
       onclick: () => setFragment("/"),
+      enabled: false,
     },
     {
       label: "Year-end sale",
       icon: <AssignmentIcon />,
       onclick: () => setFragment("/"),
+      enabled: false,
+    },
+    {
+      label: "Sair",
+      icon: <ExitToAppIcon />,
+      onclick: () => setFragment("/"),
+      enabled: false,
     },
   ];
-
+  
   const mainListItems = (
     <React.Fragment key={0}>
       {listItemsData.map((item, index) => (
         <React.Fragment>
-          <ListItemButton key={index} onClick={item.onclick}>
+          <ListItemButton key={index} onClick={item.onclick} disabled={!item.enabled}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.label} />
           </ListItemButton>
@@ -159,16 +176,16 @@ export default function RootLayout({ children }) {
       ))}
     </React.Fragment>
   );
-
+  
   const secondaryListItems = (
     <React.Fragment key={1}>
       <ListSubheader component="div" inset>
-        Saved reports
+        Relatórios salvos
       </ListSubheader>
       {secondaryListItemsData.map((item, index) => (
-        <ListItemButton key={index}>
+        <ListItemButton key={index} onClick={item.onclick} disabled={!item.enabled}>
           <ListItemIcon>{item.icon}</ListItemIcon>
-          <ListItemText primary={item.label} onClick={item.onClick} />
+          <ListItemText primary={item.label} />
         </ListItemButton>
       ))}
     </React.Fragment>
@@ -212,11 +229,7 @@ export default function RootLayout({ children }) {
                 >
                   Menu
                 </Typography>
-                <IconButton color="inherit">
-                  <Badge badgeContent={4} color="secondary">
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
+               
               </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>

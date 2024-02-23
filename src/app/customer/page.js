@@ -16,6 +16,7 @@ import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
 import clienteInstance from "@/helper/axios-instance";
 
+
 const columns = [
   { id: "nomeFantasia", label: "Nome", minWidth: 170 },
   {
@@ -150,7 +151,7 @@ export default function RootLayout({ children }) {
 
       <Button
         variant="contained"
-        sx={{ mt: 2 }}
+        sx={{ mt: 2,backgroundColor:"#004AAD" }}
         onClick={() => setFragment("/customer/new")}
       >
         + novo cliente
