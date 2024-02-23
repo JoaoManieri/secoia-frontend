@@ -13,8 +13,8 @@ import Typography from "@mui/material/Typography";
 import InfoForm from "./InfoForm";
 import ContactForm from "./ContactForm";
 import Review from "./Review";
-import { useRouter } from "next/navigation";
 import CircularProgress from "@mui/material/CircularProgress";
+import EnvioFormulario from "./EnvioFormulario"
 
 const steps = ["Informações do cliente", "Informações de contato", "Revisão"];
 
@@ -53,7 +53,11 @@ function getStepContent(step) {
         />
       );
     case 3:
-      return <CircularProgress />;
+      return <EnvioFormulario 
+      dataCliente={dataCliente}
+      listEndereco={listEndereco}
+      listContatos={listContatos}
+      />;
     default:
       throw new Error("Erro");
   }
@@ -61,7 +65,6 @@ function getStepContent(step) {
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const router = useRouter();
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -93,23 +96,23 @@ export default function Checkout() {
           <React.Fragment>
             {getStepContent(activeStep)}
             <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              {activeStep !== 0 && (
+              {activeStep !== 0 && activeStep !== 3 && (
                 <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                   Voltar
                 </Button>
               )}
-
-              <Button
+              {activeStep !== 3 && <Button
                 variant="contained"
-                onClick={
-                  activeStep === steps.length
-                    ? router.push("/customer")
-                    : handleNext
-                }
+                onClick={handleNext}
+                // onClick={
+                //   activeStep === steps.length
+                //     ? router.push("/customer")
+                //     : handleNext
+                // }
                 sx={{ mt: 3, ml: 1 }}
               >
                 {activeStep === steps.length - 1 ? "Concluir cadastro" : "Next"}
-              </Button>
+              </Button>}
             </Box>
           </React.Fragment>
         </Paper>

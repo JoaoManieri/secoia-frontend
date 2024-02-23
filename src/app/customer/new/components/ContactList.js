@@ -30,7 +30,7 @@ export default function ContactList({ rows }) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row"> {row.nome} </TableCell>
-              <TableCell align="right">{row.cargo}</TableCell>
+              <TableCell align="right">{row.telefone}</TableCell>
               <TableCell align="right">{row.email}</TableCell>
             </TableRow>
           ))}

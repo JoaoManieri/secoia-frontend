@@ -102,7 +102,7 @@ export default function RootLayout({ children }) {
 
   const listItemsData = [
     {
-      label: "Dashboard",
+      label: "Menu",
       icon: <DashboardIcon />,
       onclick: () => setFragment("/dashboard"),
     },
@@ -112,7 +112,7 @@ export default function RootLayout({ children }) {
       onclick: () => setFragment("/"),
     },
     {
-      label: "Customers",
+      label: "Cadastrar clientes",
       icon: <PeopleIcon />,
       onclick: () => setFragment("/customer"),
     },
@@ -186,7 +186,8 @@ export default function RootLayout({ children }) {
             <AppBar position="absolute" open={open}>
               <Toolbar
                 sx={{
-                  pr: "24px", // keep right padding when drawer closed
+                  pr: "24px",
+                  backgroundColor:"#004AAD" // keep right padding when drawer closed
                 }}
               >
                 <IconButton
@@ -208,7 +209,7 @@ export default function RootLayout({ children }) {
                   noWrap
                   sx={{ flexGrow: 1 }}
                 >
-                  Dashboard
+                  Menu
                 </Typography>
                 <IconButton color="inherit">
                   <Badge badgeContent={4} color="secondary">

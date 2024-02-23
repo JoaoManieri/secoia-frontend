@@ -36,8 +36,8 @@ export default function InfoForm({
     return { cep, logradouro, numero, bairro, municipio, uf };
   }
 
-  function createDataContact(nome, cargo, email, telefone) {
-    return { nome, cargo, email, telefone };
+  function createDataContact(nome, cargo, email, telefone, celular) {
+    return { nome, cargo, email, telefone, celular };
   }
 
   const handleBlurCNPJ = async (event) => {
@@ -49,23 +49,25 @@ export default function InfoForm({
 
       const enderecoDefault = [
         createDataEndereco(
-          response.data.cep,
-          response.data.logradouro,
-          response.data.numero,
-          response.data.bairro,
-          response.data.municipio,
-          response.data.uf
+          response.data.cep ?? 'CEP não informado',
+          response.data.logradouro ?? 'Logradouro não informado',
+          response.data.numero ?? 'Número não informado',
+          response.data.bairro ?? 'Bairro não informado',
+          response.data.municipio ?? 'Município não informado',
+          response.data.uf ?? 'UF não informada'
         ),
       ];
-
+      
       const contatoDefault = [
         createDataContact(
-          response.data.nome,
-          response.data.cargo,
-          response.data.email,
-          response.data.telefone
+          response.data.nome ?? 'Nome não informado',
+          response.data.cargo ?? 'Cargo não informado',
+          response.data.email ?? 'Email não informado',
+          response.data.telefone ?? 'Telefone não informado',
+          response.data.celular ?? 'Celular não informado'
         ),
       ];
+      
       setListEndereco(enderecoDefault);
       setListContatos(contatoDefault);
       console.log(response.data);
