@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
+import { useForm } from "react-hook-form";
 
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import clienteInstance from "@/helper/axios-instance";
 import Autocomplete from "@mui/material/Autocomplete";
 import top100Films from "./Users";
+import InputMask from "react-input-mask"
 
 export default function InfoForm({
   onDataCliente,
@@ -16,7 +18,7 @@ export default function InfoForm({
   const [clientData, setClientData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const { cnpj, formState: { errors } } = useForm();
   const handleChangeCNPJ = (event) => {
     const cnpj = event.target.value;
     setClientData({ ...clientData, cnpj });
@@ -92,19 +94,29 @@ export default function InfoForm({
         Informações do cliente
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="cnpj"
-            name="cnpj"
-            label="CNPJ"
-            fullWidth
-            autoComplete="cnpj"
-            variant="outlined"
-            onChange={handleChangeCNPJ}
-            onBlur={handleBlurCNPJ}
-            value={clientData ? clientData.cnpj : ""}
-          />
+      <Grid item xs={12}>
+      <InputMask
+      mask="99.999.999/9999-99"
+      maskChar=" "
+      onChange={handleChangeCNPJ}
+      onBlur={handleBlurCNPJ}
+      value={clientData ? clientData.cnpj : ""}
+    >
+      {() => (
+        <TextField
+          required
+          id="cnpj"
+          name="cnpj"
+          label="CNPJ"
+          fullWidth
+          autoComplete="cnpj"
+          variant="outlined"
+          error={Boolean(errors.cnpj)}
+          helperText={errors.cnpj?.message}
+      
+        />
+      )}
+    </InputMask>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <TextField
