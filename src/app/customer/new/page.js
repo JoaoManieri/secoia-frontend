@@ -15,13 +15,15 @@ import ContactForm from "./ContactForm";
 import Review from "./Review";
 import CircularProgress from "@mui/material/CircularProgress";
 import EnvioFormulario from "./EnvioFormulario"
+import EnableState from "@/util/enumVerificacao"
 
 const steps = ["Informações do cliente", "Informações de contato", "Revisão"];
 
-function getStepContent(step) {
+function getStepContent(step,setStatusBtn) {
   const [dataCliente, setDataCliente] = React.useState({});
   const [listEndereco, setListEndereco] = React.useState([]);
   const [listContatos, setListContatos] = React.useState([]);
+  
 
   //React.useEffect(() => {}, [listEndereco]);
 
@@ -29,6 +31,7 @@ function getStepContent(step) {
     case 0:
       return (
         <InfoForm
+          setStatusBtn={setStatusBtn}
           onDataCliente={setDataCliente}
           cliente={dataCliente}
           setListEndereco={setListEndereco}
@@ -65,6 +68,7 @@ function getStepContent(step) {
 }
 
 export default function Checkout() {
+  const [statusBtn, setStatusBtn] = React.useState(EnableState.DISABLED);
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -95,7 +99,7 @@ export default function Checkout() {
             ))}
           </Stepper>
           <React.Fragment>
-            {getStepContent(activeStep)}
+            { getStepContent(activeStep,setStatusBtn)}
             <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
               {activeStep !== 0 && activeStep !== 3 && (
                 <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
@@ -103,6 +107,8 @@ export default function Checkout() {
                 </Button>
               )}
               {activeStep !== 3 && <Button
+
+                disabled={statusBtn}
                 variant="contained"
                 onClick={handleNext}
                 // onClick={
@@ -112,8 +118,8 @@ export default function Checkout() {
                 // }
                 sx={{ mt: 3, ml: 1,backgroundColor:"#004AAD"  }}
               >
-                {activeStep === steps.length - 1 ? "Concluir cadastro" : "Next"}
-              </Button>}
+                {activeStep === steps.length - 1 ? "Concluir cadastro" : "Próximo"}
+              </Button>
             </Box>
           </React.Fragment>
         </Paper>
