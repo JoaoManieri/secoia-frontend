@@ -8,8 +8,11 @@ import clienteInstance from "@/helper/axios-instance";
 import Autocomplete from "@mui/material/Autocomplete";
 import top100Films from "./Users";
 import InputMask from "react-input-mask"
+import { cnpj as validateCnpj } from 'cpf-cnpj-validator'; 
+import EnableState from "@/util/enumVerificacao"
 
 export default function InfoForm({
+  setStatusBtn,
   onDataCliente,
   cliente,
   setListEndereco,
@@ -19,11 +22,36 @@ export default function InfoForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { cnpj, formState: { errors } } = useForm();
+
+
+ 
+
+ //
+  const [campos, setCampos] = useState({
+      Nomefantazia: false,
+      razaoSocial: false,
+      areaAtuacao: false,
+      cnpj: false,
+      firstStatus: true
+  });
+  
+
   const handleChangeCNPJ = (event) => {
     const cnpj = event.target.value;
     setClientData({ ...clientData, cnpj });
   };
-
+  
+  const validaBtn = (event) => {
+    if(campos.Nomefantazia == false && campos.razaoSocial ==false && campos.areaAtuacao==false && campos.cnpj==false && campos.firstStatus == false){
+     
+      setStatusBtn(EnableState.ENABLED)
+    }
+    else{
+      setStatusBtn(EnableState.DISABLED)
+      
+    }
+  };
+  
   useEffect(() => {
     setClientData(cliente);
   }, []);
@@ -42,8 +70,32 @@ export default function InfoForm({
     return { nome, cargo, email, telefone };
   }
 
+  const handleBlurCampoVazio = (event) => {
+    setCampos(prevState => ({...prevState,firstStatus: false}))
+    validaBtn()
+    const valorCampo = event.target.value.trim();
+    if (valorCampo === "") {
+      validaBtn()
+      return true
+    } else {
+      validaBtn()
+      return false
+    }
+  };
+
+  useEffect(() => {
+    setStatusBtn(EnableState.DISABLED)
+  }, []);
+
+
+
   const handleBlurCNPJ = async (event) => {
-    const cnpj = event.target.value;
+   // setCampos(prevState => ({...prevState,firstStatus: false}))
+    const meuCnpj = event.target.value.replace(/\D/g, '');
+    const cnpjValido = validateCnpj.isValid(meuCnpj);
+    setCampos((prevState) => ({ ...prevState, cnpj: !cnpjValido }));
+    validaBtn();
+
     setClientData({ ...clientData, cnpj });
     setLoading(true);
     try {
@@ -88,6 +140,11 @@ export default function InfoForm({
     };
   });
 
+  useEffect(() => {
+    validaBtn();
+   
+  }, [campos, clientData]);
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -96,30 +153,31 @@ export default function InfoForm({
       <Grid container spacing={3}>
       <Grid item xs={12}>
       <InputMask
-      mask="99.999.999/9999-99"
-      maskChar=" "
-      onChange={handleChangeCNPJ}
-      onBlur={handleBlurCNPJ}
-      value={clientData ? clientData.cnpj : ""}
-    >
-      {() => (
-        <TextField
-          required
-          id="cnpj"
-          name="cnpj"
-          label="CNPJ"
-          fullWidth
-          autoComplete="cnpj"
-          variant="outlined"
-          error={Boolean(errors.cnpj)}
-          helperText={errors.cnpj?.message}
-      
-        />
-      )}
-    </InputMask>
+            mask="99.999.999/9999-99"
+            maskChar=" "
+            onChange={(event) => setClientData({ ...clientData, cnpj: event.target.value })}
+            onBlur={handleBlurCNPJ}
+            value={clientData ? clientData.cnpj : ""}
+          >
+            {() => (
+              <TextField
+              
+                required
+                id="cnpj"
+                name="cnpj"
+                label="CNPJ"
+                fullWidth
+                autoComplete="cnpj"
+                variant="outlined"
+                error={campos.cnpj}
+                helperText={errors.cnpj}
+              />
+            )}
+          </InputMask>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={campos.Nomefantazia}
                 type="text"
                 required
                 id="fantasia"
@@ -133,11 +191,13 @@ export default function InfoForm({
                 onChange={(e) =>
                   setClientData({ ...clientData, fantasia: e.target.value })
                 }
+                onBlur={(e) =>  setCampos(prevState => ({...prevState,Nomefantazia: handleBlurCampoVazio(e)}))}
               />
             </Grid>
 
             <Grid item xs={12} sm={6}>
               <TextField
+                error={campos.razaoSocial}
                 type="text"
                 required
                 id="nome"
@@ -151,12 +211,14 @@ export default function InfoForm({
                 onChange={(e) =>
                   setClientData({ ...clientData, nome: e.target.value })
                 }
+                onBlur={(e) =>  setCampos(prevState => ({...prevState,razaoSocial: handleBlurCampoVazio(e)}))}
               />
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <TextField
+          error={campos.areaAtuacao}
             required
             id="atividadePrincipal"
             name="atividadePrincipal"
@@ -170,6 +232,7 @@ export default function InfoForm({
                 atividadePrincipal: e.target.value,
               })
             }
+            onBlur={(e) =>  setCampos(prevState => ({...prevState,areaAtuacao: handleBlurCampoVazio(e)}))}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
