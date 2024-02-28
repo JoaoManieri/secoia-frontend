@@ -119,7 +119,7 @@ export default function Checkout() {
                 sx={{ mt: 3, ml: 1,backgroundColor:"#004AAD"  }}
               >
                 {activeStep === steps.length - 1 ? "Concluir cadastro" : "Próximo"}
-              </Button>
+              </Button>}
             </Box>
           </React.Fragment>
         </Paper>

@@ -96,10 +96,12 @@ export default function InfoForm({
     setCampos((prevState) => ({ ...prevState, cnpj: !cnpjValido }));
     validaBtn();
 
-    setClientData({ ...clientData, cnpj });
+    const save_cnpj = event.target.value
+
+    setClientData({ ...clientData, save_cnpj });
     setLoading(true);
     try {
-      const response = await clienteInstance.get(`externo/busca/${cnpj}`);
+      const response = await clienteInstance.get(`externo/busca/${meuCnpj}`);
 
       const enderecoDefault = [
         createDataEndereco(

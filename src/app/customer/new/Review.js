@@ -5,6 +5,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Divider } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import TextField from '@mui/material/TextField';
 
 export default function Review({ dataCliente, listEndereco, listContatos }) {
   console.log(dataCliente);
@@ -20,6 +21,7 @@ export default function Review({ dataCliente, listEndereco, listContatos }) {
           <Typography variant="body1">
             <strong>Razão Social:</strong> {dataCliente.nome}
           </Typography>
+          <TextField id="outlined-basic" label="Outlined" variant="outlined"   defaultValue={dataCliente.cnpj} />
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body1">
