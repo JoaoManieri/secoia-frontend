@@ -120,8 +120,8 @@ export default function RootLayout({ children }) {
     {
       label: "Funções",
       icon: <ApiIcon />,
-      onclick: () => setFragment("/"),
-      enabled: false,
+      onclick: () => setFragment("/norma"),
+      enabled: true,
     },
     {
       label: "Indicadores",
