@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Paper, TableContainer, Table, TableHead, TableBody, TableCell, TableRow, TablePagination } from '@mui/material';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import { getNormas } from './services/normasService'; 
 
 
@@ -15,7 +14,7 @@ const columns = [
 ];
 
 
-const NormasTable = ({ normas }) => (
+const NormasTable = ({ normas, onNormaClick }) => (
   <TableContainer sx={{ maxHeight: 440 }}>
     <Table stickyHeader aria-label="sticky table">
       <TableHead>
@@ -28,10 +27,16 @@ const NormasTable = ({ normas }) => (
         </TableRow>
       </TableHead>
       <TableBody>
-        {normas.map((row) => (
-          <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+        {normas.map((norma) => (
+          <TableRow
+            hover
+            role="checkbox"
+            tabIndex={-1}
+            key={norma.id}
+            onClick={() => onNormaClick(norma)}
+          >
             {columns.map((column) => {
-              const value = row[column.id];
+              const value = norma[column.id];
               return (
                 <TableCell key={column.id} align={column.align}>
                   {value}
@@ -44,6 +49,12 @@ const NormasTable = ({ normas }) => (
     </Table>
   </TableContainer>
 );
+
+// Em algum lugar onde você use o NormasTable
+const handleNormaClick = (norma) => {
+  console.log('Clicou na norma:', norma);
+};
+
 
 const RootLayout = () => {
   const [page, setPage] = React.useState(0);
@@ -84,7 +95,7 @@ const RootLayout = () => {
         {loading ? (
           <p>Carregando normas...</p>
         ) : (
-          <NormasTable normas={normas.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)} />
+          <NormasTable normas={normas.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)} onNormaClick={handleNormaClick}/>
         )}
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}

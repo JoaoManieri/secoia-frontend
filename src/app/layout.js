@@ -22,6 +22,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PeopleIcon from "@mui/icons-material/People";
 import BarChartIcon from "@mui/icons-material/BarChart";
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import LayersIcon from "@mui/icons-material/Layers";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { useRouter } from "next/navigation";
@@ -118,8 +119,8 @@ export default function RootLayout({ children }) {
       enabled: true,
     },
     {
-      label: "Funções",
-      icon: <ApiIcon />,
+      label: "Norma",
+      icon: <AutoStoriesIcon />,
       onclick: () => setFragment("/norma"),
       enabled: true,
     },
