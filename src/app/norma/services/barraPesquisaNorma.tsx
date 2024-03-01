@@ -11,13 +11,18 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 
 type TipoBuscaNormas = {
   retronoBusca: (buscaNorma: string, entidade: string) => void;
+  entidadesUnicas: string[];
 };
 
-export const BuscaNorma = ({ retronoBusca: retornoBusca }: TipoBuscaNormas) => {
+const BuscaNorma = ({
+  retronoBusca: retornoBusca,
+  entidadesUnicas,
+}: TipoBuscaNormas) => {
   const [buscaNorma, setBuscaNorma] = useState("");
   const [entidadeSelecionada, setEntidadeSelecionada] = useState("todos");
 
@@ -44,11 +49,11 @@ export const BuscaNorma = ({ retronoBusca: retornoBusca }: TipoBuscaNormas) => {
             value={buscaNorma}
             onChange={(e) => handleBusca(e.target.value)}
             fullWidth
-            placeholder="id/codigo/idioma/ano..."
+            placeholder="Codigo / Idioma / Ano"
             startAdornment={
               <InputAdornment position="start">
                 <SvgIcon color="action" fontSize="small">
-                  {/* <MagnifyingGlassIcon /> */}
+                  <SearchIcon />
                 </SvgIcon>
               </InputAdornment>
             }
@@ -71,8 +76,11 @@ export const BuscaNorma = ({ retronoBusca: retornoBusca }: TipoBuscaNormas) => {
             sx={{ height: 56 }}
           >
             <MenuItem value={"todos"}>Todos</MenuItem>
-            <MenuItem value={"12V"}>12V</MenuItem>
-            <MenuItem value={"24V"}>24V</MenuItem>
+            {entidadesUnicas.map((entidade) => (
+              <MenuItem key={entidade} value={entidade}>
+                {entidade}
+              </MenuItem>
+            ))}
           </TextField>
         </Grid>
 
@@ -91,3 +99,5 @@ export const BuscaNorma = ({ retronoBusca: retornoBusca }: TipoBuscaNormas) => {
     </Card>
   );
 };
+
+export default BuscaNorma;

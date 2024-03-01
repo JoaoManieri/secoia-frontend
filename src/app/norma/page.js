@@ -67,15 +67,16 @@ const handleNormaClick = (norma) => {
   console.log("Clicou na norma:", norma);
 };
 
-export const RootLayout = () => {
+const RootLayout = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [normas, setNormas] = React.useState([]);
   const [todasNormas, setTodasNormas] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const [entidadeunica, setEntidadeUnica] = React.useState([]);
 
   const fuseOptions = {
-    keys: ["modelo", "connector"],
+    keys: ["id", "entidade", "codigo", "Ano"],
     threshold: 0.5,
     ignoreLocation: true,
   };
@@ -99,7 +100,6 @@ export const RootLayout = () => {
     }
 
     const filtroDeNorma = selectableFieldsFilter(entidade);
-
     if (normaEncontrada.length > 0) {
       fuse.setCollection(filtroDeNorma);
       const results = fuse.search(normaEncontrada);
@@ -110,12 +110,24 @@ export const RootLayout = () => {
     }
   };
 
+  function entidadesUnicas(normasData) {
+    const entidadesUnicas = new Set();
+    normasData.forEach((norma) => {
+      entidadesUnicas.add(norma.entidade);
+    });
+    const t = Array.from(entidadesUnicas);
+    console.log(t);
+    setEntidadeUnica(t);
+  }
+
   React.useEffect(() => {
     const fetchNormas = async () => {
       setLoading(true);
       try {
         const normasData = await getNormas();
         setNormas(normasData);
+        setTodasNormas(normasData);
+        entidadesUnicas(normasData);
       } catch (error) {
         console.error("Erro ao buscar normas:", error);
       } finally {
@@ -139,7 +151,7 @@ export const RootLayout = () => {
     <React.Fragment>
       <h1>Normas</h1>
       <br />
-      <BuscaNorma retronoBusca={handleSearch} />
+      <BuscaNorma retronoBusca={handleSearch} entidadesUnicas={entidadeunica} />
       <br />
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         {loading ? (
@@ -166,3 +178,5 @@ export const RootLayout = () => {
     </React.Fragment>
   );
 };
+
+export default RootLayout;
