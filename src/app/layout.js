@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
-import ApiIcon from '@mui/icons-material/Api';
+import ApiIcon from "@mui/icons-material/Api";
 import Container from "@mui/material/Container";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -22,17 +22,17 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PeopleIcon from "@mui/icons-material/People";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import LayersIcon from "@mui/icons-material/Layers";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { useRouter } from "next/navigation";
 import Link from "@mui/material/Link";
-import WebhookIcon from '@mui/icons-material/Webhook';
+import WebhookIcon from "@mui/icons-material/Webhook";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 //export { RootLayout }; // Export both for flexibility
 
 function Copyright() {
@@ -46,7 +46,6 @@ function Copyright() {
       {"."}
     </Typography>
   );
-
 }
 
 const drawerWidth = 240;
@@ -113,7 +112,7 @@ export default function RootLayout({ children }) {
       enabled: true,
     },
     {
-      label: "Cadastrar clientes",
+      label: "Clientes",
       icon: <GroupAddIcon />,
       onclick: () => setFragment("/customer"),
       enabled: true,
@@ -137,7 +136,7 @@ export default function RootLayout({ children }) {
       enabled: false,
     },
   ];
-  
+
   const secondaryListItemsData = [
     {
       label: "--",
@@ -164,12 +163,16 @@ export default function RootLayout({ children }) {
       enabled: false,
     },
   ];
-  
+
   const mainListItems = (
     <React.Fragment key={0}>
       {listItemsData.map((item, index) => (
         <React.Fragment>
-          <ListItemButton key={index} onClick={item.onclick} disabled={!item.enabled}>
+          <ListItemButton
+            key={index}
+            onClick={item.onclick}
+            disabled={!item.enabled}
+          >
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.label} />
           </ListItemButton>
@@ -177,14 +180,18 @@ export default function RootLayout({ children }) {
       ))}
     </React.Fragment>
   );
-  
+
   const secondaryListItems = (
     <React.Fragment key={1}>
       <ListSubheader component="div" inset>
         Relatórios salvos
       </ListSubheader>
       {secondaryListItemsData.map((item, index) => (
-        <ListItemButton key={index} onClick={item.onclick} disabled={!item.enabled}>
+        <ListItemButton
+          key={index}
+          onClick={item.onclick}
+          disabled={!item.enabled}
+        >
           <ListItemIcon>{item.icon}</ListItemIcon>
           <ListItemText primary={item.label} />
         </ListItemButton>
@@ -206,7 +213,7 @@ export default function RootLayout({ children }) {
               <Toolbar
                 sx={{
                   pr: "24px",
-                  backgroundColor:"#004AAD" // keep right padding when drawer closed
+                  backgroundColor: "#004AAD", // keep right padding when drawer closed
                 }}
               >
                 <IconButton
@@ -230,7 +237,6 @@ export default function RootLayout({ children }) {
                 >
                   Menu
                 </Typography>
-               
               </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>

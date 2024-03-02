@@ -14,6 +14,7 @@ import {
 import Fuse from "fuse.js";
 import { getNormas } from "./services/normasService";
 import BuscaNorma from "./services/barraPesquisaNorma";
+import { useRouter } from "next/navigation";
 
 const columns = [
   { id: "entidade", label: "Entidade", minWidth: 170 },
@@ -63,10 +64,6 @@ const NormasTable = ({ normas, onNormaClick }) => (
   </TableContainer>
 );
 
-const handleNormaClick = (norma) => {
-  console.log("Clicou na norma:", norma);
-};
-
 const RootLayout = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -74,6 +71,12 @@ const RootLayout = () => {
   const [todasNormas, setTodasNormas] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [entidadeunica, setEntidadeUnica] = React.useState([]);
+
+  const router = useRouter();
+
+  const handleNormaClick = (norma) => {
+    router.push("norma/" + norma.id);
+  };
 
   const fuseOptions = {
     keys: ["id", "entidade", "codigo", "Ano"],
