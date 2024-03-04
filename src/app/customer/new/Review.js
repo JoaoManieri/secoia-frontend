@@ -6,6 +6,10 @@ import ListItemText from "@mui/material/ListItemText";
 import { Divider } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import TextField from '@mui/material/TextField';
+import Autocomplete from "@mui/material/Autocomplete";
+
+
+
 
 export default function Review({ dataCliente, listEndereco, listContatos }) {
   console.log(dataCliente);
@@ -13,51 +17,106 @@ export default function Review({ dataCliente, listEndereco, listContatos }) {
   return (
     <React.Fragment>
       <Typography variant="h5" gutterBottom>
-        Cadastro de Clientes
+        Confirmação cadastro de Clientes
       </Typography>
+      <br />
 
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
+      <Grid container spacing={3}>
+        <Grid item xs={12} >
           <Typography variant="body1">
-            <strong>Razão Social:</strong> {dataCliente.nome}
-          </Typography>
-          <TextField id="outlined-basic" label="Outlined" variant="outlined"   defaultValue={dataCliente.cnpj} />
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body1">
-            <strong>Nome Fantasia:</strong> {dataCliente.fantasia}
+            <TextField id="standard-basic" label="Razão Social:" variant="standard" fullWidth  defaultValue={dataCliente.nome}/>
           </Typography>
         </Grid>
-        <Grid item xs={6}>
+
+        <Grid item xs={12}>
           <Typography variant="body1">
-            <strong>CNPJ:</strong> {dataCliente.cnpj}
+            <TextField id="standard-basic" label="Nome Fantasia:" variant="standard" fullWidth  defaultValue={dataCliente.fantasia}/>
           </Typography>
         </Grid>
+
         <Grid item xs={6}>
           <Typography variant="body1">
-            <strong>Simples nacional:</strong> {dataCliente.statusEmpresa}
+            <TextField id="standard-basic" label="CNPJ" variant="standard" fullWidth defaultValue={dataCliente.cnpj}/>
           </Typography>
         </Grid>
+
         <Grid item xs={6}>
           <Typography variant="body1">
-            <strong>Área de Atuação:</strong> {dataCliente.atividadePrincipal}
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body1">
-            <strong>Analisat de Conta:</strong>{" "}
-            {dataCliente.analistaDaContaUsuarioId}
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body1">
-            <strong>Gestor de Conta:</strong>{" "}
-            {dataCliente.gestorDaContaUsuarioId}
+        <Autocomplete
+            id="clear-on-escape"
+            defaultValue={dataCliente.simplesNacionalAtivo}
+            clearOnEscape
+            options={["Ativo","Inativo"]}
+            renderInput={(params) => (
+            <TextField {...params} label="Simples nacional ativo" variant="standard" />
+        )}
+      />
+          
+
           </Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="body1">
-            <strong>Fator Competitivo:</strong> {dataCliente.fatorCompetitivo}
+          <TextField id="standard-basic" label="Área de Atuação:" variant="standard"  fullWidth defaultValue={dataCliente.atividadePrincipal}/>
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body1">
+            <Autocomplete
+              id="clear-on-escape"
+              defaultValue={dataCliente.analistaDaContaUsuarioId}
+              clearOnEscape
+              options={[
+                "Peter Parker",
+                "Clark Kent",
+                "Bruce Wayne",
+                "Diana Prince",
+                "Barry Allen",
+                "Tony Stark ",
+                "DavSteve Rogers",
+              ]}
+            renderInput={(params) => (
+            <TextField {...params} label="Simples nacional ativo" variant="standard" />
+              )}
+          />
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="body1">
+          <Autocomplete
+            id="clear-on-escape"
+            defaultValue={dataCliente.gestorDaContaUsuarioId}
+            clearOnEscape
+            options={[
+              "Peter Parker",
+              "Clark Kent",
+              "Bruce Wayne",
+              "Diana Prince",
+              "Barry Allen",
+              "Tony Stark ",
+              "DavSteve Rogers",
+            ]}
+            renderInput={(params) => (
+            <TextField {...params} label="Simples nacional ativo" variant="standard" />
+              )}
+            />
+        
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+        <Autocomplete
+            id="clear-on-escape"
+            defaultValue={dataCliente.statusEmpresa}
+            clearOnEscape
+            options={["Sim", "Não"]}
+            renderInput={(params) => (
+            <TextField {...params} label="Simples nacional ativo?" fullWidth variant="standard" />
+        )}
+      />
+      </Grid>
+        <Grid item xs={12}>
+          <Typography variant="body1">
+            <TextField id="standard-basic" label="Fator Competitivo:"  fullWidth variant="standard"  defaultValue= {dataCliente.fatorCompetitivo}/>
           </Typography>
         </Grid>
       </Grid>
@@ -75,6 +134,8 @@ export default function Review({ dataCliente, listEndereco, listContatos }) {
             <ListItemText primary={contato.nome} />
             <ListItemText primary={contato.cargo} />
             <ListItemText primary={contato.email} />
+            <TextField id="standard-basic" label=""  sm={1} variant="standard"  className={classes.root}  defaultValue={contato.email}/>
+
             <Typography variant="body2">{contato.telefone}</Typography>
           </ListItem>
         ))}
