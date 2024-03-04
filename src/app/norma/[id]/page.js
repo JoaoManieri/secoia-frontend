@@ -71,12 +71,13 @@ export default function Page({ params }) {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            id="codigo"
             name="codigo"
             label="Codigo"
             variant="outlined"
             disabled={isDisabled}
             fullWidth
-            onChange={handleInputChange}
+            onChange={(e) => setNorma({ ...norma, codigo: e.target.value })}
             value={norma && norma.codigo ? norma.codigo : null}
           />
         </Grid>
