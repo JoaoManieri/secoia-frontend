@@ -9,6 +9,8 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from "@mui/material/Autocomplete";
 
 
+
+
 export default function Review({ dataCliente, listEndereco, listContatos }) {
   console.log(dataCliente);
 
@@ -132,9 +134,8 @@ export default function Review({ dataCliente, listEndereco, listContatos }) {
             <ListItemText primary={contato.nome} />
             <ListItemText primary={contato.cargo} />
             <ListItemText primary={contato.email} />
-            <Typography variant="h6" gutterBottom>
-        Contatos
-      </Typography>
+            <TextField id="standard-basic" label=""  sm={1} variant="standard"  className={classes.root}  defaultValue={contato.email}/>
+
             <Typography variant="body2">{contato.telefone}</Typography>
           </ListItem>
         ))}
