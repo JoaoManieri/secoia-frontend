@@ -12,7 +12,10 @@ import { Divider } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import { Grid, TextField } from "@mui/material";
 import { IconButton } from "@mui/material";
+import { useTheme } from '@mui/material/styles';
 import { Delete, Edit, Add, Save, Margin } from "@mui/icons-material";
+import DoDisturbAltIcon from '@mui/icons-material/DoDisturbAlt';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
 import Typography from "@mui/material/Typography";
 import getNormaById from "./service/normaIdService";
 
@@ -22,6 +25,7 @@ export default function Page({ params }) {
   const [loading, setLoading] = React.useState(false);
   const [isModified, setIsModified] = React.useState(false);
   const router = useRouter();
+  const theme = useTheme();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -137,7 +141,7 @@ export default function Page({ params }) {
             sx={{ width: "100%", height: "100%", borderRadius: 0 }}
             aria-label="delete"
           >
-            <Delete />
+            <DoDisturbAltIcon style={{ color: theme.palette.error.main }}></DoDisturbAltIcon>
           </IconButton>
         </Grid>
         <Grid item xs={0}>
@@ -156,7 +160,7 @@ export default function Page({ params }) {
             sx={{ width: "100%", height: "100%", borderRadius: 0 }}
             aria-label="add"
           >
-            <Add />
+            <FindInPageIcon />
           </IconButton>
         </Grid>
         <Grid item xs={0}>
