@@ -161,7 +161,7 @@ export default function InfoForm({
             maskChar=" "
             onChange={(event) => setClientData({ ...clientData, cnpj: event.target.value })}
             onBlur={handleBlurCNPJ}
-            value={clientData ? clientData.cnpj : "21.172.631/0001-68"}
+            value={clientData ? clientData.cnpj : "12.095.067/0001-36"}
           >
             {() => (
               <TextField
