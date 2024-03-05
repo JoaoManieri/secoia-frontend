@@ -195,6 +195,7 @@ export default function InfoForm({
                 onChange={(e) =>
                   setClientData({ ...clientData, fantasia: e.target.value })
                 }
+                
                 onBlur={(e) =>  setCampos(prevState => ({...prevState,Nomefantazia: handleBlurCampoVazio(e)}))}
               />
             </Grid>
