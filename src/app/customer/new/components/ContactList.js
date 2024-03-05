@@ -18,6 +18,7 @@ export default function ContactList({ rows }) {
 
 
   return (
+    
     <TableContainer component={Paper} sx={{ padding: '10px' }} >
      
       <Table size="small" stickyHeader aria-label="a dense table">
