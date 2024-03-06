@@ -10,11 +10,14 @@ import {
   TableCell,
   TableRow,
   TablePagination,
+  Button,
 } from "@mui/material";
 import Fuse from "fuse.js";
 import { getNormas } from "./services/normasService";
 import BuscaNorma from "./services/barraPesquisaNorma";
 import { useRouter } from "next/navigation";
+import NovaNormaDialog from './dialogNovaNorma'
+import { Margin } from "@mui/icons-material";
 
 const columns = [
   { id: "entidade", label: "Entidade", minWidth: 170 },
@@ -156,6 +159,8 @@ const RootLayout = () => {
       <br />
       <BuscaNorma retronoBusca={handleSearch} entidadesUnicas={entidadeunica} />
       <br />
+      <NovaNormaDialog />
+      <br />
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         {loading ? (
           <p>Carregando normas...</p>
@@ -178,6 +183,8 @@ const RootLayout = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
+
     </React.Fragment>
   );
 };

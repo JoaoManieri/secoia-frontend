@@ -32,7 +32,6 @@ export default function EnvioFormulario({
   }
 
   const enviaDados = async () => {
-    console.log("enviando dados");
     try {
       const response = await clienteInstance.post(`cliente`, {
         nomeFantasia: dataCliente.fantasia,
